@@ -43,8 +43,10 @@ def out_all_sales():
 # 3）输出统计数据1
 def out_statistics_1():
     df = pd.read_excel('/Users/liyangbin/PycharmProjects/Sales/data_out/all_data.xlsx')
-    df = pd.pivot_table(df, index='货号', values=['销量', '实收金额', '收入', '利润'], aggfunc=sum)
-    df.to_excel('/Users/liyangbin/PycharmProjects/Sales/data_out/good_is_statistics.xlsx')
+    df = pd.pivot_table(df, index='货号', values=['销量', '实收金额', '收入', '利润'],
+                        aggfunc=sum).reset_index()  #.reset_index()把'货号'那一列设置为行索引
+    df = df.reindex(columns=['货号', '图片', '销量', '实收金额', '收入', '利润']) #重新设置列名
+    df.to_excel('/Users/liyangbin/PycharmProjects/Sales/data_out/good_is_statistics.xlsx', index=False)
 
 # 4）输出统计数据2
 def out_statistics_2():
