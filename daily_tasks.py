@@ -1,7 +1,8 @@
 from datetime import date
-
+import seaborn as sns
+import matplotlib.pyplot as plt
 import pandas as pd
-
+import numpy as np
 from generic.ufunc import insert_img_to_excel
 from tasks.unify_tables import unify_jd, unify_tb
 
@@ -39,6 +40,7 @@ def out_all_sales():
 
 
     df.to_excel('/Users/liyangbin/PycharmProjects/Sales/data_out/all_data.xlsx', index=False)
+    df.to_pickle('/Users/liyangbin/PycharmProjects/Sales/data_out/all_data.pkl')
 
 # 3）输出统计数据1
 def out_statistics_1():
@@ -54,8 +56,17 @@ def out_statistics_1():
 
 # 4）输出统计数据2
 def out_statistics_2():
-    pass
+    df = pd.read_pickle('/Users/liyangbin/PycharmProjects/Sales/data_out/all_data.pkl')
+
+    sns.set(context='talk', style='darkgrid', palette='pastel', rc={'figure.figsize': [15, 10]})
+    plt.rcParams['font.sans-serif'] = ['Hiragino Sans GB']
+    plt.rcParams['axes.unicode_minus'] = False
+
+    df['月份'] = df['日期'].dt.month
+    sns.barplot(x='月份', y='销量', hue='平台', data=df, estimator=sum, ci=None)
+    plt.savefig('/Users/liyangbin/PycharmProjects/Sales/data_out/月份_销量.png', dpi=150)
 
 if __name__ == '__main__':
     # out_all_sales()
-    out_statistics_1()
+    # out_statistics_1()
+    out_statistics_2()
