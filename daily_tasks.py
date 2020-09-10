@@ -42,11 +42,14 @@ def out_all_sales():
 
 # 3）输出统计数据1
 def out_statistics_1():
-    pass
+    df = pd.read_excel('/Users/liyangbin/PycharmProjects/Sales/data_out/all_data.xlsx')
+    df = pd.pivot_table(df, index='货号', values=['销量', '实收金额', '收入', '利润'], aggfunc=sum)
+    df.to_excel('/Users/liyangbin/PycharmProjects/Sales/data_out/good_is_statistics.xlsx')
 
 # 4）输出统计数据2
 def out_statistics_2():
     pass
 
 if __name__ == '__main__':
-    out_all_sales()
+    # out_all_sales()
+    out_statistics_1()
